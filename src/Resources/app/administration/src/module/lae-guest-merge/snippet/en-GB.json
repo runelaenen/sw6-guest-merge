@@ -1,0 +1,49 @@
+{
+    "lae-merge": {
+        "module": {
+            "title": "Guest order merge",
+            "description": "Merge guest orders into authenticated customer accounts."
+        },
+        "tab": {
+            "label": "Guest order merge"
+        },
+        "preview": {
+            "title": "Guest orders matching this account",
+            "guestCount": "Guest customer records",
+            "orderCount": "Orders",
+            "totalAmount": "Total revenue",
+            "dateRange": "Date range",
+            "salesChannel": "Sales channel",
+            "empty": {
+                "title": "No matching guest orders",
+                "subline": "There are no guest customer records using this account's email address."
+            }
+        },
+        "actions": {
+            "title": "Verify and merge",
+            "step1Title": "1. Send verification email to the customer",
+            "step1Body": "An email with a confirmation link and a one-time code will be sent to the account's email address.",
+            "step2Title": "2. Verify by code (optional)",
+            "step2Body": "Ask the customer to read the code from the email aloud, then enter it here to confirm and merge immediately.",
+            "codePlaceholder": "Enter the 8-character code (e.g. ABCD2345)",
+            "sendVerification": "Send verification email",
+            "verifyAndMerge": "Verify and merge",
+            "cancelPending": "Cancel pending request",
+            "pendingNote": "A confirmation email has already been sent. It expires at {expiresAt}.",
+            "completedNote": "{count} order(s) merged successfully on {at}.",
+            "failedNote": "Last merge attempt failed: {reason}"
+        },
+        "directMerge": {
+            "title": "Trusted CSR direct merge",
+            "warning": "This bypasses email verification. Use only for customers whose identity is already established (long-standing relationship). All actions are logged with your user ID.",
+            "cta": "Merge without verification",
+            "confirm": "Are you sure you want to merge guest orders without email verification? This action will be logged."
+        },
+        "notify": {
+            "sent": "Verification email sent.",
+            "merged": "{count} order(s) successfully merged.",
+            "cancelled": "Pending merge request cancelled.",
+            "error": "Operation failed."
+        }
+    }
+}

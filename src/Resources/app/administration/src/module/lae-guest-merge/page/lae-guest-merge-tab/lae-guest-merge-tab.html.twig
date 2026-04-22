@@ -1,0 +1,136 @@
+<sw-card-view>
+
+    <sw-card v-if="isLoading" :isLoading="true"/>
+
+    <template v-else>
+
+        <sw-card :title="$tc('lae-merge.preview.title')" :isLoading="isProcessing">
+            <template v-if="candidateOrderCount === 0">
+                <sw-empty-state
+                        :title="$tc('lae-merge.preview.empty.title')"
+                        :subline="$tc('lae-merge.preview.empty.subline')"
+                        :absolute="false">
+                </sw-empty-state>
+            </template>
+
+            <template v-else>
+                <sw-container columns="1fr 1fr 1fr 1fr" gap="20px">
+                    <sw-description-list>
+                        <dt>{{ $tc('lae-merge.preview.guestCount') }}</dt>
+                        <dd>{{ candidateGuestCount }}</dd>
+                    </sw-description-list>
+                    <sw-description-list>
+                        <dt>{{ $tc('lae-merge.preview.orderCount') }}</dt>
+                        <dd>{{ candidateOrderCount }}</dd>
+                    </sw-description-list>
+                    <sw-description-list>
+                        <dt>{{ $tc('lae-merge.preview.totalAmount') }}</dt>
+                        <dd>{{ formatCurrency(preview.candidates.totalAmount) }}</dd>
+                    </sw-description-list>
+                    <sw-description-list>
+                        <dt>{{ $tc('lae-merge.preview.dateRange') }}</dt>
+                        <dd>
+                            {{ formatDate(preview.candidates.oldestOrderDate) }}
+                            &ndash;
+                            {{ formatDate(preview.candidates.newestOrderDate) }}
+                        </dd>
+                    </sw-description-list>
+                </sw-container>
+
+                <sw-data-grid
+                        v-if="preview.candidates.bySalesChannel && preview.candidates.bySalesChannel.length > 1"
+                        :dataSource="preview.candidates.bySalesChannel"
+                        :columns="[
+                        { property: 'salesChannelName', label: 'lae-merge.preview.salesChannel' },
+                        { property: 'orderCount', label: 'lae-merge.preview.orderCount' },
+                        { property: 'totalAmount', label: 'lae-merge.preview.totalAmount' }
+                    ]"
+                        :showSelection="false"
+                        :showActions="false">
+                    <template #column-totalAmount="{ item }">
+                        {{ formatCurrency(item.totalAmount) }}
+                    </template>
+                </sw-data-grid>
+            </template>
+        </sw-card>
+
+        <sw-card v-if="candidateOrderCount > 0"
+                 :title="$tc('lae-merge.actions.title')"
+                 :isLoading="isProcessing">
+
+            <sw-alert v-if="hasPending" variant="warning">
+                {{ $tc('lae-merge.actions.pendingNote', 0, {
+                    expiresAt: formatDate(latest.expiresAt)
+                }) }}
+            </sw-alert>
+
+            <sw-alert v-if="hasCompleted" variant="success">
+                {{ $tc('lae-merge.actions.completedNote', 0, {
+                    count: latest.movedOrderCount,
+                    at: formatDate(latest.completedAt),
+                }) }}
+            </sw-alert>
+
+            <sw-alert v-if="hasFailed" variant="error">
+                {{ $tc('lae-merge.actions.failedNote', 0, { reason: latest.errorMessage }) }}
+            </sw-alert>
+
+            <sw-container columns="1fr" gap="20px" class="lae-actions">
+                <div>
+                    <h4>{{ $tc('lae-merge.actions.step1Title') }}</h4>
+                    <p>{{ $tc('lae-merge.actions.step1Body') }}</p>
+                    <sw-button
+                            variant="primary"
+                            :disabled="isProcessing || hasPending"
+                            @click="sendVerification">
+                        {{ $tc('lae-merge.actions.sendVerification') }}
+                    </sw-button>
+
+                    <sw-button v-if="hasPending"
+                               variant="ghost"
+                               :disabled="isProcessing"
+                               @click="cancelPending">
+                        {{ $tc('lae-merge.actions.cancelPending') }}
+                    </sw-button>
+                </div>
+
+                <sw-divider/>
+
+                <div v-if="hasPending">
+                    <h4>{{ $tc('lae-merge.actions.step2Title') }}</h4>
+                    <p>{{ $tc('lae-merge.actions.step2Body') }}</p>
+                    <sw-container columns="1fr auto" gap="10px">
+                        <sw-text-field
+                                v-model="verbalCode"
+                                :placeholder="$tc('lae-merge.actions.codePlaceholder')"
+                                :disabled="isProcessing">
+                        </sw-text-field>
+                        <sw-button
+                                variant="primary"
+                                :disabled="isProcessing || !verbalCode"
+                                @click="submitCode">
+                            {{ $tc('lae-merge.actions.verifyAndMerge') }}
+                        </sw-button>
+                    </sw-container>
+                </div>
+
+                <template v-if="canDirectMerge">
+                    <sw-divider/>
+                    <div class="lae-trusted-csr">
+                        <h4>{{ $tc('lae-merge.directMerge.title') }}</h4>
+                        <sw-alert variant="warning" :showIcon="true">
+                            {{ $tc('lae-merge.directMerge.warning') }}
+                        </sw-alert>
+                        <sw-button
+                                variant="danger"
+                                :disabled="isProcessing"
+                                @click="directMerge">
+                            {{ $tc('lae-merge.directMerge.cta') }}
+                        </sw-button>
+                    </div>
+                </template>
+            </sw-container>
+        </sw-card>
+
+    </template>
+</sw-card-view>

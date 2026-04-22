@@ -1,0 +1,47 @@
+{
+    "laenen": {
+        "merge": {
+            "title": "Merge previous orders",
+            "intro": "If you placed orders as a guest using this email address before creating an account, you can merge them into your account here.",
+            "sidebarLink": "Merge previous orders",
+            "empty": "We didn't find any previous guest orders matching your account email.",
+            "contactCsr": "Please contact our customer service to merge previous guest orders.",
+            "summary": {
+                "title": "What we found",
+                "orderCount": "%count% guest order(s) using your account email",
+                "totalAmount": "Total value",
+                "oldest": "Oldest order",
+                "newest": "Most recent order"
+            },
+            "cta": {
+                "send": "Send me a confirmation email",
+                "disclaimer": "We will send a verification link and a code to your account email. Nothing is merged until you click the link or read the code to our customer service team."
+            },
+            "pending": {
+                "exists": "A confirmation email has already been sent. It expires at %expiresAt%. If you didn't receive it, please contact customer service."
+            },
+            "confirm": {
+                "title": "Confirm merging your guest orders",
+                "intro": "Please confirm you want to merge the following previous guest orders into your account:",
+                "orderCount": "%count% order(s) will be moved to your account",
+                "warning": "This action cannot be undone. The original guest customer records will be removed and the orders will appear in your account history.",
+                "cta": "Confirm and merge",
+                "cancel": "Cancel"
+            },
+            "success": {
+                "title": "Orders merged successfully",
+                "message": "%count% previous order(s) have been added to your account.",
+                "viewOrders": "View my orders"
+            },
+            "error": {
+                "title": "We couldn't process your request",
+                "backToAccount": "Back to my account",
+                "selfServiceDisabled": "Self-service merge is currently disabled. Please contact customer service."
+            },
+            "flash": {
+                "verificationSent": "A confirmation email has been sent to %email%. Please click the link to merge your previous orders.",
+                "guestOrdersDetected": "We found %count% previous guest order(s) using this email. Visit your account to merge them."
+            }
+        }
+    }
+}

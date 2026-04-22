@@ -1,0 +1,49 @@
+{
+    "lae-merge": {
+        "module": {
+            "title": "Gastbestellungs-Zusammenführung",
+            "description": "Führt Gastbestellungen in authentifizierte Kundenkonten zusammen."
+        },
+        "tab": {
+            "label": "Gastbestellungen zusammenführen"
+        },
+        "preview": {
+            "title": "Passende Gastbestellungen für dieses Konto",
+            "guestCount": "Gastkunden-Datensätze",
+            "orderCount": "Bestellungen",
+            "totalAmount": "Gesamtumsatz",
+            "dateRange": "Zeitraum",
+            "salesChannel": "Sales Channel",
+            "empty": {
+                "title": "Keine passenden Gastbestellungen",
+                "subline": "Es gibt keine Gastkunden-Datensätze mit der E-Mail-Adresse dieses Kontos."
+            }
+        },
+        "actions": {
+            "title": "Verifizieren und zusammenführen",
+            "step1Title": "1. Bestätigungs-E-Mail an den Kunden senden",
+            "step1Body": "Eine E-Mail mit Bestätigungslink und einmaligem Code wird an die Konto-E-Mail-Adresse gesendet.",
+            "step2Title": "2. Per Code verifizieren (optional)",
+            "step2Body": "Bitten Sie den Kunden, den Code aus der E-Mail vorzulesen, und geben Sie ihn hier ein, um sofort zu bestätigen und zusammenzuführen.",
+            "codePlaceholder": "8-stelligen Code eingeben (z.B. ABCD2345)",
+            "sendVerification": "Bestätigungs-E-Mail senden",
+            "verifyAndMerge": "Verifizieren und zusammenführen",
+            "cancelPending": "Ausstehende Anfrage abbrechen",
+            "pendingNote": "Eine Bestätigungs-E-Mail wurde bereits gesendet. Sie läuft am {expiresAt} ab.",
+            "completedNote": "{count} Bestellung(en) am {at} erfolgreich zusammengeführt.",
+            "failedNote": "Letzter Zusammenführungsversuch fehlgeschlagen: {reason}"
+        },
+        "directMerge": {
+            "title": "Direkte Zusammenführung durch vertrauenswürdigen CSR",
+            "warning": "Dies umgeht die E-Mail-Bestätigung. Nur für Kunden mit bereits etablierter Identität verwenden. Alle Aktionen werden mit Ihrer Benutzer-ID protokolliert.",
+            "cta": "Ohne Bestätigung zusammenführen",
+            "confirm": "Sind Sie sicher, dass Sie Gastbestellungen ohne E-Mail-Bestätigung zusammenführen möchten? Diese Aktion wird protokolliert."
+        },
+        "notify": {
+            "sent": "Bestätigungs-E-Mail gesendet.",
+            "merged": "{count} Bestellung(en) erfolgreich zusammengeführt.",
+            "cancelled": "Ausstehende Anfrage abgebrochen.",
+            "error": "Vorgang fehlgeschlagen."
+        }
+    }
+}

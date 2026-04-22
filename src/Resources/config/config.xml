@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="https://raw.githubusercontent.com/shopware/platform/trunk/src/Core/System/SystemConfig/Schema/config.xsd">
+
+    <card>
+        <title>General</title>
+        <title lang="de-DE">Allgemein</title>
+
+        <input-field type="int">
+            <name>tokenLifetimeHours</name>
+            <label>Verification link &amp; code lifetime (hours)</label>
+            <label lang="de-DE">Gueltigkeit des Bestaetigungslinks (Stunden)</label>
+            <defaultValue>24</defaultValue>
+            <helpText>How long the email verification link and verbal code remain valid before expiring. Default: 24 hours.</helpText>
+        </input-field>
+
+        <input-field type="bool">
+            <name>restrictToSameSalesChannel</name>
+            <label>Restrict merging to the same sales channel</label>
+            <label lang="de-DE">Auf gleichen Sales Channel beschraenken</label>
+            <defaultValue>false</defaultValue>
+            <helpText>If enabled, only guest customers from the same sales channel as the authenticated account will be merged.</helpText>
+        </input-field>
+
+        <input-field type="bool">
+            <name>sendCompletionEmail</name>
+            <label>Send confirmation email after merge</label>
+            <label lang="de-DE">Bestaetigungs-E-Mail nach Zusammenfuehrung senden</label>
+            <defaultValue>true</defaultValue>
+            <helpText>Send the customer a notification once the merge has completed successfully.</helpText>
+        </input-field>
+    </card>
+
+    <card>
+        <title>Storefront</title>
+        <title lang="de-DE">Storefront</title>
+
+        <input-field type="bool">
+            <name>allowSelfServiceInitiation</name>
+            <label>Allow self-service merge initiation</label>
+            <label lang="de-DE">Self-Service-Initiierung erlauben</label>
+            <defaultValue>true</defaultValue>
+            <helpText>Show a "Merge previous orders" entry in My Account.</helpText>
+        </input-field>
+
+        <input-field type="bool">
+            <name>showRegistrationHint</name>
+            <label>Show post-registration hint when guest orders are detected</label>
+            <label lang="de-DE">Hinweis nach Registrierung anzeigen</label>
+            <defaultValue>true</defaultValue>
+            <helpText>If a newly registered customer email matches existing guest orders, display a flash message pointing to the verified merge flow. No data is changed automatically.</helpText>
+        </input-field>
+    </card>
+
+    <card>
+        <title>CSR / Admin</title>
+        <title lang="de-DE">CSR / Admin</title>
+
+        <input-field type="bool">
+            <name>allowDirectMergeForTrustedCsr</name>
+            <label>Allow direct merge by trusted CSR (no email verification)</label>
+            <label lang="de-DE">Direkte Zusammenfuehrung durch vertrauenswuerdigen CSR erlauben</label>
+            <defaultValue>false</defaultValue>
+            <helpText>For well-known customers where inbox ownership is already established. Requires the "laenen_guest_merge.trusted" ACL privilege. Off by default.</helpText>
+        </input-field>
+    </card>
+
+</config>

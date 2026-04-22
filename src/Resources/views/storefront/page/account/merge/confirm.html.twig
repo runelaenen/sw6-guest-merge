@@ -1,0 +1,42 @@
+{% sw_extends '@Storefront/storefront/page/account/_page.html.twig' %}
+
+{% block page_account_main_content %}
+    <div class="account-merge-confirm">
+        <div class="account-welcome">
+            <h1>{{ "laenen.merge.confirm.title"|trans }}</h1>
+        </div>
+
+        {% set candidates = page.candidates %}
+
+        <div class="card">
+            <div class="card-body">
+                <p>{{ "laenen.merge.confirm.intro"|trans }}</p>
+
+                <ul>
+                    <li>
+                        {{ "laenen.merge.confirm.orderCount"|trans({'%count%': candidates.orderCount}) }}
+                    </li>
+                    <li>
+                        {{ "laenen.merge.summary.totalAmount"|trans }}:
+                        <strong>{{ candidates.totalAmount|currency }}</strong>
+                    </li>
+                </ul>
+
+                <p class="text-muted small">
+                    {{ "laenen.merge.confirm.warning"|trans }}
+                </p>
+
+                <form action="{{ path('frontend.account.laenen.merge.confirm.post', {'token': page.token}) }}"
+                      method="post"
+                      data-form-csrf-handler="true">
+                    <button type="submit" class="btn btn-primary">
+                        {{ "laenen.merge.confirm.cta"|trans }}
+                    </button>
+                    <a href="{{ path('frontend.account.home.page') }}" class="btn btn-link">
+                        {{ "laenen.merge.confirm.cancel"|trans }}
+                    </a>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

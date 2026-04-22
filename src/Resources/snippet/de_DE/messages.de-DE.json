@@ -1,0 +1,47 @@
+{
+    "laenen": {
+        "merge": {
+            "title": "Frühere Bestellungen zusammenführen",
+            "intro": "Wenn Sie vor der Kontoerstellung als Gast unter dieser E-Mail-Adresse bestellt haben, können Sie diese Bestellungen hier mit Ihrem Konto zusammenführen.",
+            "sidebarLink": "Frühere Bestellungen zusammenführen",
+            "empty": "Wir haben keine früheren Gastbestellungen mit Ihrer Konto-E-Mail-Adresse gefunden.",
+            "contactCsr": "Bitte kontaktieren Sie unseren Kundenservice, um frühere Gastbestellungen zusammenzuführen.",
+            "summary": {
+                "title": "Was wir gefunden haben",
+                "orderCount": "%count% Gastbestellung(en) mit Ihrer Konto-E-Mail",
+                "totalAmount": "Gesamtwert",
+                "oldest": "Älteste Bestellung",
+                "newest": "Neueste Bestellung"
+            },
+            "cta": {
+                "send": "Bestätigungs-E-Mail senden",
+                "disclaimer": "Wir senden einen Bestätigungslink und einen Code an Ihre Konto-E-Mail. Es wird nichts zusammengeführt, bis Sie den Link klicken oder den Code an unseren Kundenservice weitergeben."
+            },
+            "pending": {
+                "exists": "Eine Bestätigungs-E-Mail wurde bereits gesendet. Sie läuft am %expiresAt% ab. Falls Sie sie nicht erhalten haben, wenden Sie sich an den Kundenservice."
+            },
+            "confirm": {
+                "title": "Zusammenführung der Gastbestellungen bestätigen",
+                "intro": "Bitte bestätigen Sie, dass Sie die folgenden Gastbestellungen mit Ihrem Konto zusammenführen möchten:",
+                "orderCount": "%count% Bestellung(en) werden Ihrem Konto zugeordnet",
+                "warning": "Diese Aktion kann nicht rückgängig gemacht werden. Die ursprünglichen Gastkundendatensätze werden entfernt und die Bestellungen erscheinen in Ihrer Konto-Bestellhistorie.",
+                "cta": "Bestätigen und zusammenführen",
+                "cancel": "Abbrechen"
+            },
+            "success": {
+                "title": "Bestellungen erfolgreich zusammengeführt",
+                "message": "%count% frühere Bestellung(en) wurden Ihrem Konto hinzugefügt.",
+                "viewOrders": "Meine Bestellungen ansehen"
+            },
+            "error": {
+                "title": "Anfrage konnte nicht bearbeitet werden",
+                "backToAccount": "Zurück zu meinem Konto",
+                "selfServiceDisabled": "Self-Service-Zusammenführung ist derzeit deaktiviert. Bitte kontaktieren Sie den Kundenservice."
+            },
+            "flash": {
+                "verificationSent": "Eine Bestätigungs-E-Mail wurde an %email% gesendet. Bitte klicken Sie auf den Link, um Ihre früheren Bestellungen zusammenzuführen.",
+                "guestOrdersDetected": "Wir haben %count% frühere Gastbestellung(en) mit dieser E-Mail gefunden. Besuchen Sie Ihr Konto, um sie zusammenzuführen."
+            }
+        }
+    }
+}

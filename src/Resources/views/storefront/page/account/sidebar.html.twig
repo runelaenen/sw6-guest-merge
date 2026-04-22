@@ -1,0 +1,13 @@
+{% sw_extends '@Storefront/storefront/page/account/sidebar.html.twig' %}
+
+{% block page_account_sidebar_link_orders %}
+    {{ parent() }}
+
+    {% if config('LaenenGuestMerge.config.allowSelfServiceInitiation') %}
+        <a class="list-group-item list-group-item-action account-aside-item {% if app.request.attributes.get('_route') starts with 'frontend.account.laenen.merge' %}is-active{% endif %}"
+           href="{{ path('frontend.account.laenen.merge.index') }}"
+           title="{{ 'laenen.merge.sidebarLink'|trans }}">
+            {{ "laenen.merge.sidebarLink"|trans }}
+        </a>
+    {% endif %}
+{% endblock %}

@@ -1,0 +1,27 @@
+{
+    "name": "laenen/sw6-guest-merge",
+    "description": "Merge guest orders into authenticated Laenen customer accounts via verified email or trusted CSR action.",
+    "type": "shopware-platform-plugin",
+    "license": "proprietary",
+    "require": {
+        "shopware/core": "~6.6.0",
+        "shopware/storefront": "~6.6.0",
+        "shopware/administration": "~6.6.0"
+    },
+    "extra": {
+        "shopware-plugin-class": "Laenen\\GuestMerge\\LaenenGuestMerge",
+        "label": {
+            "en-GB": "Laenen Guest Merge",
+            "de-DE": "Laenen Gastbestellungs-Zusammenführung"
+        },
+        "description": {
+            "en-GB": "Merge guest orders into authenticated customer accounts.",
+            "de-DE": "Führt Gastbestellungen in authentifizierte Kundenkonten zusammen."
+        }
+    },
+    "autoload": {
+        "psr-4": {
+            "Laenen\\GuestMerge\\": "src/"
+        }
+    }
+}
