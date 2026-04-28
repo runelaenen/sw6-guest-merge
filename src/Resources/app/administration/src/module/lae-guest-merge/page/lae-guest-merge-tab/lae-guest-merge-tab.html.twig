@@ -101,7 +101,8 @@
                     <p>{{ $tc('lae-merge.actions.step2Body') }}</p>
                     <sw-container columns="1fr auto" gap="10px">
                         <sw-text-field
-                                v-model="verbalCode"
+                                style="margin-bottom: 0;"
+                                v-model:value="verbalCode"
                                 :placeholder="$tc('lae-merge.actions.codePlaceholder')"
                                 :disabled="isProcessing">
                         </sw-text-field>

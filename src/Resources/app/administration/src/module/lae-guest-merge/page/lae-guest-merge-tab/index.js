@@ -6,6 +6,10 @@ Shopware.Component.register('lae-guest-merge-tab', {
 
     inject: ['laeGuestMergeService', 'acl'],
 
+    mixins: [
+        Shopware.Mixin.getByName('notification'),
+    ],
+
     data() {
         return {
             isLoading: true,
