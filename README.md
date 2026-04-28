@@ -1,4 +1,4 @@
-# Guest Merge plugin for SHopware 6
+# Guest Merge plugin for Shopware 6
 
 Merge guest orders into authenticated customer accounts with verified inbox ownership, while keeping Shopware core intact.
 

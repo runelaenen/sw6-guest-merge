@@ -80,6 +80,7 @@ return function (ContainerConfigurator $configurator): void {
 
     $services->set(MergeAdminController::class)
         ->public()
+        ->call('setContainer', [service('service_container')])
         ->arg('$finder', service(GuestOrderFinder::class))
         ->arg('$requestService', service(MergeRequestService::class))
         ->arg('$merger', service(GuestOrderMerger::class))
@@ -88,5 +89,6 @@ return function (ContainerConfigurator $configurator): void {
 
     $services->set(MergeConfirmController::class)
         ->public()
+        ->call('setContainer', [service('service_container')])
         ->arg('$route', service(GuestMergeRoute::class));
 };
