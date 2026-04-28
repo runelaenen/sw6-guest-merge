@@ -11,6 +11,7 @@ use Laenen\GuestMerge\Service\MergeNotificationMailer;
 use Laenen\GuestMerge\Subscriber\CustomerRegisterSubscriber;
 use Laenen\GuestMerge\Controller\Admin\MergeAdminController;
 use Laenen\GuestMerge\Controller\Storefront\MergeConfirmController;
+use Laenen\GuestMerge\Core\SalesChannel\GuestMerge\GuestMergeRoute;
 use function Symfony\Component\DependencyInjection\Loader\Configurator\service;
 
 return function (ContainerConfigurator $configurator): void {
@@ -65,6 +66,16 @@ return function (ContainerConfigurator $configurator): void {
         ->arg('$config', service(SystemConfigReader::class))
         ->tag('kernel.event_subscriber');
 
+    // ============== Store API Routes ==============
+
+    $services->set(GuestMergeRoute::class)
+        ->public()
+        ->arg('$requestService', service(MergeRequestService::class))
+        ->arg('$finder', service(GuestOrderFinder::class))
+        ->arg('$merger', service(GuestOrderMerger::class))
+        ->arg('$mailer', service(MergeNotificationMailer::class))
+        ->arg('$config', service(SystemConfigReader::class));
+
     // ============== Controllers ==============
 
     $services->set(MergeAdminController::class)
@@ -77,9 +88,5 @@ return function (ContainerConfigurator $configurator): void {
 
     $services->set(MergeConfirmController::class)
         ->public()
-        ->arg('$requestService', service(MergeRequestService::class))
-        ->arg('$finder', service(GuestOrderFinder::class))
-        ->arg('$merger', service(GuestOrderMerger::class))
-        ->arg('$mailer', service(MergeNotificationMailer::class))
-        ->arg('$config', service(SystemConfigReader::class));
+        ->arg('$route', service(GuestMergeRoute::class));
 };

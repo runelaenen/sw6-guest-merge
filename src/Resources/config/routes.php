@@ -5,4 +5,5 @@ use Symfony\Component\Routing\Loader\Configurator\RoutingConfigurator;
 return function (RoutingConfigurator $routes): void {
     $routes->import('../../Controller/Admin', 'attribute');
     $routes->import('../../Controller/Storefront', 'attribute');
+    $routes->import('../../Core/SalesChannel/GuestMerge', 'attribute');
 };

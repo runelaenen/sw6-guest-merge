@@ -2,15 +2,10 @@
 
 namespace Laenen\GuestMerge\Controller\Storefront;
 
+use Laenen\GuestMerge\Core\SalesChannel\GuestMerge\AbstractGuestMergeRoute;
 use Laenen\GuestMerge\Exception\MergeException;
-use Laenen\GuestMerge\Service\GuestOrderFinder;
-use Laenen\GuestMerge\Service\GuestOrderMerger;
-use Laenen\GuestMerge\Service\MergeNotificationMailer;
-use Laenen\GuestMerge\Service\MergeRequestService;
-use Laenen\GuestMerge\Service\SystemConfigReader;
 use Shopware\Core\System\SalesChannel\SalesChannelContext;
 use Shopware\Storefront\Controller\StorefrontController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
@@ -18,11 +13,7 @@ use Symfony\Component\Routing\Attribute\Route;
 class MergeConfirmController extends StorefrontController
 {
     public function __construct(
-        private readonly MergeRequestService $requestService,
-        private readonly GuestOrderFinder $finder,
-        private readonly GuestOrderMerger $merger,
-        private readonly MergeNotificationMailer $mailer,
-        private readonly SystemConfigReader $config,
+        private readonly AbstractGuestMergeRoute $route,
     ) {}
 
     #[Route(path: '/account/merge-guest-orders', name: 'frontend.account.laenen.merge.index', methods: ['GET'])]
@@ -33,14 +24,13 @@ class MergeConfirmController extends StorefrontController
             return $this->redirectToRoute('frontend.account.login.page');
         }
 
-        $candidates = $this->finder->findCandidatesFor($customer->getId(), $salesChannelContext->getSalesChannelId());
-        $latest = $this->requestService->loadLatestForCustomer($customer->getId());
+        $response = $this->route->status($salesChannelContext, $customer);
 
         return $this->renderStorefront('@LaenenGuestMerge/storefront/page/account/merge/index.html.twig', [
             'page' => [
-                'candidates' => $candidates,
-                'latestRequest' => $latest,
-                'allowSelfService' => $this->config->allowSelfServiceInitiation(),
+                'candidates' => $response->getCandidates(),
+                'latestRequest' => $response->getLatestRequest(),
+                'allowSelfService' => $response->isAllowSelfService(),
             ],
         ]);
     }
@@ -53,26 +43,8 @@ class MergeConfirmController extends StorefrontController
             return $this->redirectToRoute('frontend.account.login.page');
         }
 
-        if (!$this->config->allowSelfServiceInitiation()) {
-            $this->addFlash('warning', $this->trans('laenen.merge.error.selfServiceDisabled'));
-            return $this->redirectToRoute('frontend.account.laenen.merge.index');
-        }
-
         try {
-            $result = $this->requestService->initiate(
-                $customer->getId(),
-                null,
-                $salesChannelContext->getContext(),
-                $salesChannelContext->getSalesChannelId()
-            );
-            $this->mailer->sendVerification(
-                $customer->getId(),
-                $result['token'],
-                $result['shortCode'],
-                $result['expiresAt'],
-                $result['candidates'],
-                $salesChannelContext->getContext()
-            );
+            $this->route->initiate($salesChannelContext, $customer);
             $this->addFlash('success', $this->trans('laenen.merge.flash.verificationSent', [
                 '%email%' => $customer->getEmail(),
             ]));
@@ -95,17 +67,13 @@ class MergeConfirmController extends StorefrontController
         }
 
         try {
-            $row = $this->requestService->loadPendingByToken($token, $customer->getId());
-            $candidates = $this->finder->findCandidatesFor(
-                $customer->getId(),
-                $salesChannelContext->getSalesChannelId()
-            );
+            $response = $this->route->confirmPreview($token, $salesChannelContext, $customer);
 
             return $this->renderStorefront('@LaenenGuestMerge/storefront/page/account/merge/confirm.html.twig', [
                 'page' => [
-                    'token' => $token,
-                    'request' => $row,
-                    'candidates' => $candidates,
+                    'token' => $response->getToken(),
+                    'request' => $response->getRequest(),
+                    'candidates' => $response->getCandidates(),
                 ],
             ]);
         } catch (MergeException $e) {
@@ -116,31 +84,18 @@ class MergeConfirmController extends StorefrontController
     }
 
     #[Route(path: '/account/merge-guest-orders/confirm/{token}', name: 'frontend.account.laenen.merge.confirm.post', requirements: ['token' => '[a-f0-9]{64}'], methods: ['POST'])]
-    public function confirmPost(
-        string $token,
-        Request $request,
-        SalesChannelContext $salesChannelContext
-    ): Response {
+    public function confirmPost(string $token, SalesChannelContext $salesChannelContext): Response
+    {
         $customer = $salesChannelContext->getCustomer();
         if ($customer === null) {
             return $this->redirectToRoute('frontend.account.login.page');
         }
 
         try {
-            $row = $this->requestService->loadPendingByToken($token, $customer->getId());
-            $requestHexId = bin2hex($row['id']);
-
-            $this->requestService->markConfirmed(
-                $requestHexId,
-                MergeRequestService::METHOD_LINK,
-                $salesChannelContext->getContext()
-            );
-
-            $result = $this->merger->executeForRequest($requestHexId, $salesChannelContext->getContext());
-            $this->mailer->sendCompletion($result, $salesChannelContext->getContext());
+            $response = $this->route->confirmExecute($token, $salesChannelContext, $customer);
 
             return $this->renderStorefront('@LaenenGuestMerge/storefront/page/account/merge/success.html.twig', [
-                'page' => ['result' => $result],
+                'page' => ['result' => $response->getResult()],
             ]);
         } catch (MergeException $e) {
             return $this->renderStorefront('@LaenenGuestMerge/storefront/page/account/merge/error.html.twig', [
