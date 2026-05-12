@@ -10,24 +10,25 @@ use Laenen\GuestMerge\Service\MergeRequestService;
 use Laenen\GuestMerge\Service\SystemConfigReader;
 use Shopware\Core\Framework\Context;
 use Shopware\Core\Framework\Api\Context\AdminApiSource;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 
 #[Route(defaults: ['_routeScope' => ['api'], '_acl' => ['customer.editor']])]
-readonly class MergeAdminController
+class MergeAdminController extends AbstractController
 {
     public function __construct(
-        private GuestOrderFinder $finder,
-        private MergeRequestService $requestService,
-        private GuestOrderMerger $merger,
-        private MergeNotificationMailer $mailer,
-        private SystemConfigReader $config,
+        private readonly GuestOrderFinder $finder,
+        private readonly MergeRequestService $requestService,
+        private readonly GuestOrderMerger $merger,
+        private readonly MergeNotificationMailer $mailer,
+        private readonly SystemConfigReader $config,
     ) {}
 
     #[Route(path: '/api/_action/laenen/guest-merge/preview/{customerId}', name: 'api.action.laenen.guest_merge.preview', methods: ['GET'])]
-    public function preview(string $customerId, Context $context): JsonResponse
+    public function preview(string $customerId): JsonResponse
     {
         $candidates = $this->finder->findCandidatesFor($customerId);
         $latest = $this->requestService->loadLatestForCustomer($customerId);
