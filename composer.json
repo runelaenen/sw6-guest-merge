@@ -4,9 +4,9 @@
     "type": "shopware-platform-plugin",
     "license": "proprietary",
     "require": {
-        "shopware/core": "~6.6.0",
-        "shopware/storefront": "~6.6.0",
-        "shopware/administration": "~6.6.0"
+        "shopware/core": "~6.7.0",
+        "shopware/storefront": "~6.7.0",
+        "shopware/administration": "~6.7.0"
     },
     "extra": {
         "shopware-plugin-class": "Laenen\\GuestMerge\\LaenenGuestMerge",

@@ -79,9 +79,9 @@ Shopware.Component.register('lae-guest-merge-tab', {
                 const res = await this.laeGuestMergeService.verifyCode(
                     this.customerId, this.verbalCode
                 );
-                this.notifySuccess(this.$tc('lae-merge.notify.merged', 0, {
+                this.notifySuccess(this.$tc('lae-merge.notify.merged', {
                     count: res.result?.movedOrderCount ?? 0,
-                }));
+                }, 0));
                 this.verbalCode = '';
                 await this.loadPreview();
             } catch (e) {
@@ -107,9 +107,9 @@ Shopware.Component.register('lae-guest-merge-tab', {
             this.isProcessing = true;
             try {
                 const res = await this.laeGuestMergeService.directMerge(this.customerId);
-                this.notifySuccess(this.$tc('lae-merge.notify.merged', 0, {
+                this.notifySuccess(this.$tc('lae-merge.notify.merged', {
                     count: res.result?.movedOrderCount ?? 0,
-                }));
+                }, 0));
                 await this.loadPreview();
             } catch (e) {
                 this.notifyError(this.errorMessage(e));

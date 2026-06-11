@@ -50,7 +50,7 @@
                         {% if page.allowSelfService %}
                             <form action="{{ path('frontend.account.laenen.merge.initiate') }}"
                                   method="post"
-                                  data-form-csrf-handler="true">
+                                  data-form-handler="true">
                                 <button type="submit" class="btn btn-primary">
                                     {{ "laenen.merge.cta.send"|trans }}
                                 </button>

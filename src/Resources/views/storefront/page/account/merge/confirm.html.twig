@@ -28,7 +28,7 @@
 
                 <form action="{{ path('frontend.account.laenen.merge.confirm.post', {'token': page.token}) }}"
                       method="post"
-                      data-form-csrf-handler="true">
+                      data-form-handler="true">
                     <button type="submit" class="btn btn-primary">
                         {{ "laenen.merge.confirm.cta"|trans }}
                     </button>

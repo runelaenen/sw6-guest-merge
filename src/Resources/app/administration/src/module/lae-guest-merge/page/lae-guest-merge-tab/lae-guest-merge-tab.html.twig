@@ -1,10 +1,10 @@
-<sw-card-view>
+<mt-card-view>
 
-    <sw-card v-if="isLoading" :isLoading="true"/>
+    <mt-card v-if="isLoading" :isLoading="true"/>
 
     <template v-else>
 
-        <sw-card :title="$tc('lae-merge.preview.title')" :isLoading="isProcessing">
+        <mt-card :title="$tc('lae-merge.preview.title')" :isLoading="isProcessing">
             <template v-if="candidateOrderCount === 0">
                 <sw-empty-state
                         :title="$tc('lae-merge.preview.empty.title')"
@@ -52,46 +52,45 @@
                     </template>
                 </sw-data-grid>
             </template>
-        </sw-card>
+        </mt-card>
 
-        <sw-card v-if="candidateOrderCount > 0"
+        <mt-card v-if="candidateOrderCount > 0"
                  :title="$tc('lae-merge.actions.title')"
                  :isLoading="isProcessing">
 
-            <sw-alert v-if="hasPending" variant="warning">
-                {{ $tc('lae-merge.actions.pendingNote', 0, {
+            <mt-banner v-if="hasPending" variant="attention">
+                {{ $tc('lae-merge.actions.pendingNote', {
                     expiresAt: formatDate(latest.expiresAt)
-                }) }}
-            </sw-alert>
+                }, 0) }}
+            </mt-banner>
 
-            <sw-alert v-if="hasCompleted" variant="success">
-                {{ $tc('lae-merge.actions.completedNote', 0, {
+            <mt-banner v-if="hasCompleted" variant="positive">
+                {{ $tc('lae-merge.actions.completedNote', {
                     count: latest.movedOrderCount,
                     at: formatDate(latest.completedAt),
-                }) }}
-            </sw-alert>
+                }, 0) }}
+            </mt-banner>
 
-            <sw-alert v-if="hasFailed" variant="error">
-                {{ $tc('lae-merge.actions.failedNote', 0, { reason: latest.errorMessage }) }}
-            </sw-alert>
+            <mt-banner v-if="hasFailed" variant="critical">
+                {{ $tc('lae-merge.actions.failedNote', { reason: latest.errorMessage }, 0) }}
+            </mt-banner>
 
             <sw-container columns="1fr" gap="20px" class="lae-actions">
                 <div>
                     <h4>{{ $tc('lae-merge.actions.step1Title') }}</h4>
                     <p>{{ $tc('lae-merge.actions.step1Body') }}</p>
-                    <sw-button
+                    <mt-button
                             variant="primary"
                             :disabled="isProcessing || hasPending"
                             @click="sendVerification">
                         {{ $tc('lae-merge.actions.sendVerification') }}
-                    </sw-button>
+                    </mt-button>
 
-                    <sw-button v-if="hasPending"
-                               variant="ghost"
+                    <mt-button v-if="hasPending"
                                :disabled="isProcessing"
                                @click="cancelPending">
                         {{ $tc('lae-merge.actions.cancelPending') }}
-                    </sw-button>
+                    </mt-button>
                 </div>
 
                 <sw-divider/>
@@ -100,18 +99,18 @@
                     <h4>{{ $tc('lae-merge.actions.step2Title') }}</h4>
                     <p>{{ $tc('lae-merge.actions.step2Body') }}</p>
                     <sw-container columns="1fr auto" gap="10px">
-                        <sw-text-field
+                        <mt-text-field
                                 style="margin-bottom: 0;"
-                                v-model:value="verbalCode"
+                                v-model="verbalCode"
                                 :placeholder="$tc('lae-merge.actions.codePlaceholder')"
                                 :disabled="isProcessing">
-                        </sw-text-field>
-                        <sw-button
+                        </mt-text-field>
+                        <mt-button
                                 variant="primary"
                                 :disabled="isProcessing || !verbalCode"
                                 @click="submitCode">
                             {{ $tc('lae-merge.actions.verifyAndMerge') }}
-                        </sw-button>
+                        </mt-button>
                     </sw-container>
                 </div>
 
@@ -119,19 +118,19 @@
                     <sw-divider/>
                     <div class="lae-trusted-csr">
                         <h4>{{ $tc('lae-merge.directMerge.title') }}</h4>
-                        <sw-alert variant="warning" :showIcon="true">
+                        <mt-banner variant="attention">
                             {{ $tc('lae-merge.directMerge.warning') }}
-                        </sw-alert>
-                        <sw-button
-                                variant="danger"
+                        </mt-banner>
+                        <mt-button
+                                variant="critical"
                                 :disabled="isProcessing"
                                 @click="directMerge">
                             {{ $tc('lae-merge.directMerge.cta') }}
-                        </sw-button>
+                        </mt-button>
                     </div>
                 </template>
             </sw-container>
-        </sw-card>
+        </mt-card>
 
     </template>
-</sw-card-view>
+</mt-card-view>
